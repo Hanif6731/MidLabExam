@@ -46,4 +46,18 @@ router.post('/addEmployee',function (req,res){
     });
 });
 
+router.get('/allEmployeeList',function (req,res){
+    if(req.session.username!=null){
+        employeeModel.getAll(function (results){
+            var data ={results:results}
+            console.log(data);
+            res.render('admin/allEmp',data);
+        });
+
+    }
+    else {
+        res.redirect('/login');
+    }
+})
+
 module.exports = router;
