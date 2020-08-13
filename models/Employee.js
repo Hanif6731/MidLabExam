@@ -36,8 +36,8 @@ module.exports ={
     },
 
     insert: function(user, callback){
-        var sql = "insert into user values('', '"+user.name+"', '"+user.phone+"', '"+user.gender+"'" +
-            ", '"+user.designation+"', '"+user.password+"')";
+        var sql = "insert into employee values('', '"+user.name+"', '"+user.phone+"', '"+user.gender+"'" +
+            ", '"+user.designation+"' , '"+user.username+"', '"+user.password+"')";
 
         console.log(sql);
 
