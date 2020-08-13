@@ -14,7 +14,7 @@ router.post('/', function(req, res){
     };
     console.log(req.body);
     if(req.body.username=='admin' && req.body.password=='1234'){
-        req.session.username = user.uname;
+        req.session.username = req.body.username;
         res.redirect('/admin');
     }
     else{
