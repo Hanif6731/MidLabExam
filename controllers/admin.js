@@ -56,8 +56,33 @@ router.get('/allEmployeeList',function (req,res){
 
     }
     else {
+
+    }
+});
+
+router.get('/update/:id',function (req,res) {
+    if(req.session.username!=null){
+        employeeModel.get(req.params.id,function (result) {
+            console.log(result);
+            res.render('admin/update',result);
+        });
+    }else {
         res.redirect('/login');
     }
-})
+});
+
+router.post('/update/:id',function (req,res) {
+    console.log(req.body);
+    var emp=req.body;
+    emp.id=req.params.id;
+    employeeModel.update(emp,function(status){
+        if(status){
+            res.redirect('/admin/allEmployeeList');
+        }
+        else{
+            res.send("All fields required");
+        }
+    });
+});
 
 module.exports = router;

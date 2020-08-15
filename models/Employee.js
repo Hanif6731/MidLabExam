@@ -3,7 +3,7 @@ var db = require('./db');
 module.exports ={
 
     get: function(id, callback){
-        var sql = "select * from employee where id="+id;
+        var sql = "select * from employee where empId="+id;
         db.getResults(sql, function(result){
             if(result.length > 0){
                 callback(result[0]);
@@ -52,7 +52,7 @@ module.exports ={
 
     update: function(user, callback){
         var sql = "UPDATE `employee` SET `Name`='"+user.name+"',`Phone`='"+user.phone+"'," +
-            "`gender`='"+user.gender+"',`designation`='"+user.designation+"',`username`='"+user.username+"'," +
+            "`gender`='"+user.gender+"',`designation`='"+user.designation+"'," +
             "`password`='"+user.password+"' WHERE empId="+user.id;
         db.execute(sql, function(status){
             if(status){
