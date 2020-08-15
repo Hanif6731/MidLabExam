@@ -12,6 +12,17 @@ module.exports ={
             }
         });
     },
+    search: function(string, callback){
+        var sql = "select * from employee where empId='"+string+"' or name like'%"+string+"' or name like '"+string+"%' " +
+            "or name like '%___"+string+"___%'";
+        db.getResults(sql, function(result){
+            if(result.length > 0){
+                callback(result);
+            }else{
+                callback([]);
+            }
+        });
+    },
 
     getAll: function(callback){
         var sql = "select * from employee";
