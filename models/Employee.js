@@ -39,9 +39,9 @@ module.exports ={
         var sql = "select * from employee where username='"+user.username+"' and password='"+user.password+"'";
         db.getResults(sql, function(result){
             if(result.length > 0){
-                callback(true);
+                callback(result, true);
             }else{
-                callback(false);
+                callback([],false);
             }
         });
     },
