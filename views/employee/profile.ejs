@@ -1,0 +1,41 @@
+<html>
+<head>
+
+</head>
+<body>
+
+<fieldset>
+    <legend>Profile Information</legend>
+    <table>
+        <tr>
+            <td colspan="2"><img src="/assets/<%=path%>" style="height: 100px; width: auto"/><hr/></td>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>:<%= empId %></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td>:<%= Name %></td>
+        </tr>
+        <tr>
+            <td>Phone</td>
+            <td>:<%= Phone %></td>
+        </tr>
+        <tr>
+            <td>Gender</td>
+            <td>
+                :<%= gender %>
+            </td>
+        </tr>
+        <tr>
+            <td>Designation</td>
+            <td>
+                :<%= designation %>
+            </td>
+        </tr>
+    </table>
+</fieldset>
+<a href="/logout">Logout</a>
+</body>
+</html>

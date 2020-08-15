@@ -23,6 +23,8 @@ app.use(exSession({secret: 'my secret value', saveUninitialized: true, resave: f
 /*app.get('/admin.js/user/:abc/:name', function(req, res){
 	res.send(req.params.abc+" | "+req.params.name);
 });*/
+
+app.use('/assets',express.static('assets'));
 app.use('/jquery',express.static('node_modules/jquery/dist'));
 app.use('/login',login);
 app.use('/admin',admin);

@@ -17,6 +17,16 @@ router.get('/', function(req, res){
 
 });
 
+router.get('/myProfile',function (req,res){
+    if(req.session.username!=null){
+        employeeModel.get(req.session.empId,function (result){
+            res.render('employee/profile',result);
+        });
+    }else {
+        res.redirect('/login');
+    }
+});
+
 // router.post('/', function(req, res){
 //
 //
