@@ -27,116 +27,62 @@ router.get('/myProfile',function (req,res){
     }
 });
 
-// router.post('/', function(req, res){
-//
-//
-//
-// });
-//
-// router.get('/addEmployee',function (req,res){
-//     if(req.session.username!=null){
-//
-//         res.render('admin/addEmp');
-//
-//     }
-//     else {
-//         res.redirect('/login');
-//     }
-// });
-//
-// router.post('/addEmployee',function (req,res){
-//     console.log(req.body);
-//     employeeModel.insert(req.body,function (status) {
-//         if(status){
-//             res.redirect('/admin');
-//         }
-//         else{
-//             res.send('Server error');
-//         }
-//     });
-// });
-//
-// router.get('/allEmployeeList',function (req,res){
-//     if(req.session.username!=null){
-//         employeeModel.getAll(function (results){
-//             var data ={results:results}
-//             console.log(data);
-//             res.render('admin/allEmp',data);
-//         });
-//
-//     }
-//     else {
-//
-//     }
-// });
-//
-// router.get('/update/:id',function (req,res) {
-//     if(req.session.username!=null){
-//         employeeModel.get(req.params.id,function (result) {
-//             console.log(result);
-//             res.render('admin/update',result);
-//         });
-//     }else {
-//         res.redirect('/login');
-//     }
-// });
-//
-// router.post('/update/:id',function (req,res) {
-//     console.log(req.body);
-//     var emp=req.body;
-//     emp.id=req.params.id;
-//     employeeModel.update(emp,function(status){
-//         if(status){
-//             res.redirect('/admin/allEmployeeList');
-//         }
-//         else{
-//             res.send("All fields required");
-//         }
-//     });
-// });
-//
-// router.get('/delete/:id',function (req,res) {
-//     if(req.session.username!=null){
-//         employeeModel.get(req.params.id,function (result) {
-//             console.log(result);
-//             res.render('admin/delete',result);
-//         });
-//     }else {
-//         res.redirect('/login');
-//     }
-// });
-//
-// router.post('/delete/:id',function (req,res) {
-//     var id=req.params.id;
-//     employeeModel.delete(id,function(status){
-//         if(status){
-//             res.redirect('/admin/allEmployeeList');
-//         }
-//         else{
-//             res.send("Server Error");
-//         }
-//     });
-// });
-//
-// router.get('/search',function (req, res) {
-//     if(req.session.username!=null){
-//
-//         res.render('admin/search');
-//
-//     }else {
-//         res.redirect('/login');
-//     }
-// });
-//
-// router.get('/search/:searchString',function (req, res) {
-//     if(req.session.username!=null){
-//
-//         employeeModel.search(req.params.searchString,function (results) {
-//             console.log(results);
-//             res.send(results);
-//         });
-//
-//     }
-// });
+router.get('/updateProfile',function (req,res){
+    if(req.session.username!=null){
+        employeeModel.get(req.session.empId,function (result){
+            res.render('employee/update',result);
+        });
+    }else {
+        res.redirect('/login');
+    }
+});
+
+
+
+router.post('/updateProfile',function (req,res) {
+    console.log(req.body);
+    var emp=req.body;
+    emp.id=req.session.empId;
+    employeeModel.update(emp,function(status){
+        if(status){
+            res.redirect('/employee/myProfile');
+        }
+        else{
+            res.send("All fields required");
+        }
+    });
+});
+
+router.post('/upload', function(req, res) {
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return res.status(400).send('No files were uploaded.');
+    }
+
+    // The name of the input field (i.e. "propic") is used to retrieve the uploaded file
+    let propic = req.files.propic;
+    var employee={
+        user_id:req.session.empId,
+        propic:req.session.empId+propic.name
+
+    };
+    console.log(req.files.propic.name);
+    // Use the mv() method to place the file somewhere on your server
+
+    employeeModel.updateProPic(employee,function (status) {
+        if(status){
+            propic.mv('assets/'+req.session.empId+propic.name, function(err) {
+                if (err)
+                    console.log(err.stack);
+
+                res.redirect('/employee/myProfile');
+            });
+        }
+        else {
+            res.redirect('/employee/updateProfile');
+        }
+    });
+
+
+});
 
 module.exports = router;

@@ -73,6 +73,17 @@ module.exports ={
             }
         });
     },
+    updateProPic:function (employee,callback){
+        var sql = "UPDATE employee SET " +
+            "`path`='"+employee.propic+"' where empId="+employee.user_id;
+        db.execute(sql, function(status){
+            if(status){
+                callback(true);
+            }else{
+                callback(false);
+            }
+        });
+    },
 
     delete: function(id, callback){
         var sql = "delete from employee where empid="+id;
